@@ -19,6 +19,7 @@ library("fastAdaboost")
 # ----------------- PREPROCESSING -------------------
 
 setwd(file.path("C:","Users","mallo","Documents","Century Link Proj","Data Prep")) #FILE PATH
+setwd(file.path( "C:","Centurylink Project","LSU MSA Data Project (1)"))           #FILE PATH
 
 #Bring in Final Data set from Data Processing.R as Raw
 file7<-"Final_2015Q2.csv"
@@ -118,6 +119,3 @@ bag_fit <- train(form = OUTCOME ~ .,              #FORMULA
 
 
 #-------------- OVERLAY CHARACTERISTICS --------------
-
-
-
