@@ -70,27 +70,31 @@ write.csv(x = Samp1_10k, file = file_dhruv) #repeat for each Sampx_10k
 
 #------------------ TEST VARIABLES -------------------
 
-## Create Controls
-
+## Create Controls for training
 fit_ctrl <- trainControl(method = "none", 
                          classProbs = TRUE,
                          summaryFunction = twoClassSummary)
 
-fit_ctrl1 <- fit_ctrl <- trainControl(method = "oob", 
-                                      classProbs = TRUE,
-                                      summaryFunction = twoClassSummary)
-
-#1. Use Random Forest
-
-
+#1. Use decision tree (rpart)
+rpart_fit <- train(OUTCOME ~ ., 
+                   data = Samp1_10k,
+                   method = "rpart",
+                   metric = "ROC",
+                   trControl = fit_ctrl,
+                   na.action = na.exclude)
 
 #2. Use SVM
-
-
+svm_fit <- train(Class ~ ., 
+                 data = Samp1_10k, 
+                 method = "svmRadial", 
+                 trControl = fit_ctrl, 
+                 preProc = c("center", "scale"),
+                 tuneLength = 8,
+                 metric = "ROC")
 
 #3. Use adaboost classification tree
 set.seed(2017)
-ada_fit <- train(form = OUTCOME ~ .,              #FORMULA
+ada_fit <- train(form = OUTCOME ~ .,
                  data = Samp1,
                  method = "adaboost",
                  trControl = fit_ctrl, 
@@ -99,10 +103,11 @@ ada_fit <- train(form = OUTCOME ~ .,              #FORMULA
 
 #4. Try "treebag" method
 set.seed(2017)
-bag_fit <- train(form = OUTCOME ~ .,              #FORMULA
+bag_fit <- train(form = OUTCOME ~ .,
                  data = Samp1_10k, 
                  method = "treebag",
-                 trControl = fit_ctrl1, 
+                 trControl = fit_ctrl,
+                 nbagg = 5,
                  metric = "ROC",
                  na.action = na.exclude)
 
@@ -111,6 +116,7 @@ log_fit <- train(form = OUTCOME ~ .,
              data=Samp1_10k, 
              method="glm",
              family="binomial",
+             trControl = fit_ctrl,
              na.action = na.exclude)
 
 summary(log_fit)
