@@ -100,14 +100,25 @@ ada_fit <- train(form = OUTCOME ~ .,              #FORMULA
 #4. Try "treebag" method
 set.seed(2017)
 bag_fit <- train(form = OUTCOME ~ .,              #FORMULA
-                 data = Samp1, 
+                 data = Samp1_10k, 
                  method = "treebag",
                  trControl = fit_ctrl1, 
                  metric = "ROC",
                  na.action = na.exclude)
 
-#4. Use logistic regression
+#5. Use logistic regression all vars
+log_fit <- train(form = OUTCOME ~ .,
+             data=Samp1_10k, 
+             method="glm",
+             family="binomial",
+             na.action = na.exclude)
 
+summary(log_fit)
+varImp(log_fit)
+log_pred <- predict(log_fit,
+                    newdata=Samp2_10k)
+
+confusionMatrix(data=log_pred, Samp2_10k$OUTCOME, positive = "Yes")
 
 
 #--------------------- MODELS ------------------------
