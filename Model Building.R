@@ -46,10 +46,25 @@ levels(Raw$OUTCOME) <- make.names(c("No","Yes"))
 #Get naive rule for classification
 prop.table(table(Raw$OUTCOME))
 
-#Partition data into k samples (has equal priors as full sample)
+#Partition data into 4 samples (20k rows each)
 set.seed(2017)
-trainindex <- createFolds(Raw$OUTCOME, k = 4)
-Samp1<- Raw[trainindex$Fold1 ,]
+trainindex_20k <- createFolds(Raw$OUTCOME, k = 4)
+Samp1_20k<- Raw[trainindex_20k$Fold1 ,]
+
+#Partition data into 8 samples (10k rows each)
+trainindex_10k <- createFolds(Raw$OUTCOME, k = 8)
+Samp1_10k<- Raw[trainindex_10k$Fold1 ,]
+Samp2_10k<- Raw[trainindex_10k$Fold2 ,]
+Samp3_10k<- Raw[trainindex_10k$Fold3 ,]
+Samp4_10k<- Raw[trainindex_10k$Fold4 ,]
+Samp5_10k<- Raw[trainindex_10k$Fold5 ,]
+Samp6_10k<- Raw[trainindex_10k$Fold6 ,]
+Samp7_10k<- Raw[trainindex_10k$Fold7 ,]
+Samp8_10k<- Raw[trainindex_10k$Fold8 ,]
+
+#Write the samples for k = 8
+file_dhruv<-"your path"
+write.csv(x = Samp1_10k, file = "your path") #repeat for each Sampx_10k
 
 
 #------------------ TEST VARIABLES -------------------
