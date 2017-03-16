@@ -20,6 +20,7 @@ library("fastAdaboost")
 
 setwd(file.path("C:","Users","mallo","Documents","Century Link Proj","Data Prep")) #FILE PATH
 setwd(file.path( "C:","Centurylink Project","LSU MSA Data Project (1)"))           #FILE PATH
+setwd(file.path( "F:","New folder","Century Link Project"))
 
 #Bring in Final Data set from Data Processing.R as Raw
 file7<-"Final_2015Q2.csv"
@@ -63,8 +64,8 @@ Samp7_10k<- Raw[trainindex_10k$Fold7 ,]
 Samp8_10k<- Raw[trainindex_10k$Fold8 ,]
 
 #Write the samples for k = 8
-file_dhruv<-"your path"
-write.csv(x = Samp1_10k, file = "your path") #repeat for each Sampx_10k
+file_dhruv<-"sample_1.csv"
+write.csv(x = Samp1_10k, file = file_dhruv) #repeat for each Sampx_10k
 
 
 #------------------ TEST VARIABLES -------------------
